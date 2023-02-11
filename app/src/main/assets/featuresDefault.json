@@ -1,0 +1,36 @@
+{
+  "Common": {
+    "showBanners": false,
+    "pushesEnabled": false
+  },
+  "Overview": {
+    "showAppRate": false,
+    "showAppUpdate": false,
+    "showClientInfo": false,
+    "showAppServices": false,
+    "Content": {
+      "showOnBoarding": false
+    }
+  },
+  "News": {
+    "sorting": false,
+    "showAds": false
+  },
+  "Profile": {
+    "showFAQ": false,
+    "showPromotion": false,
+    "showAppRate": false,
+    "ShowHelp": false,
+    "Settings": {
+      "showNightTheme": true,
+      "showBackgroundChange": false
+    }
+  },
+  "Catalog": {
+    "showProducts": false,
+    "showAds": false
+  },
+  "Market": {
+    "showNotificationButton": false
+  }
+}

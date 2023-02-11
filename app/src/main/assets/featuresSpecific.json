@@ -1,0 +1,9 @@
+{
+  "Common": {
+    "showBanners": true,
+    "pushesEnabled": true
+  },
+  "Analytics": {
+    "contentTracking": true
+  }
+}
