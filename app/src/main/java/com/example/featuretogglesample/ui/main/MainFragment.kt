@@ -26,7 +26,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         lifecycleScope.launch {
             val root = featureToggleProvider.get()
             Timber.d("Feature toggle root = \n $root")
-            val section = featureToggleProvider.get(FeatureToggle.Analytics::class.java)
+            val section = featureToggleProvider.get(FeatureToggle.Analytics::class)
             Timber.d("Feature toggle section = \n $section")
         }
     }

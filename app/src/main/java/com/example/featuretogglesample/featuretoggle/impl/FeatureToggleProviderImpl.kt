@@ -2,9 +2,10 @@ package com.example.featuretogglesample.featuretoggle.impl
 
 import com.example.featuretogglesample.featuretoggle.FeatureToggleBuilder
 import com.example.featuretogglesample.featuretoggle.FeatureToggleProvider
+import kotlin.reflect.KClass
 
-class FeatureToggleProviderImpl<T>(
-    private val toggleClass: Class<T>,
+class FeatureToggleProviderImpl<T : Any>(
+    private val toggleClass: KClass<T>,
     private val builder: FeatureToggleBuilder
 ) : FeatureToggleProvider<T> {
 
@@ -23,15 +24,13 @@ class FeatureToggleProviderImpl<T>(
     }
 
     @Suppress("UNCHECKED_CAST")
-    override suspend fun <S> get(sectionClass: Class<S>): S {
-        val toggle = provide()
-        val fields = toggleClass.declaredFields
-        val field = fields.find { it.type == sectionClass }
+    override suspend fun <S : Any> get(sectionClass: KClass<S>): S {
+        val field = toggleClass.java.declaredFields
+            .find { it.type == sectionClass.java }
             ?: throw IllegalArgumentException(
-                "${toggleClass.canonicalName} " +
-                        "doesn't have field instance of ${sectionClass.canonicalName}"
+                "${toggleClass.qualifiedName} doesn't have field instance of ${sectionClass.qualifiedName}"
             )
         field.isAccessible = true
-        return field[toggle] as S
+        return field[provide()] as S
     }
 }

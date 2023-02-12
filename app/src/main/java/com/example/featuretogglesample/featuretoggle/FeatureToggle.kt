@@ -8,7 +8,7 @@ package com.example.featuretogglesample.featuretoggle
  * may be thrown if some field won't be initialized by json parser).
  * Don't add the same section (field class) more than once, else it might not be extracted by
  * [FeatureToggleProvider].
- * Data classes provide clone method facility for probable testing needs.
+ * Data classes provide clone method facility for probable testing and logging needs.
  */
 data class FeatureToggle(
     val common: Common = Common(),

@@ -1,26 +1,15 @@
 package com.example.featuretogglesample.featuretoggle.utils
 
 import android.content.res.AssetManager
-import java.io.InputStream
 
 object IOUtils {
     /**
-     * Returns content of the file, located in the assets, as a string
+     * Returns content of a file located in the assets
      */
     fun readAssetsFileContent(assetManager: AssetManager, fileName: String): String {
-        var json = String()
-        var inputStream: InputStream? = null
-        try {
-            try {
-                inputStream = assetManager.open(fileName)
-                val array = ByteArray(inputStream.available())
-                if (inputStream.read(array) > 0) json = String(array)
-            } catch (ignored: Exception) {
-            } finally {
-                inputStream?.close()
-            }
-        } catch (ignored: Exception) {
+        return assetManager.open(fileName).use {
+            val array = ByteArray(it.available())
+            if (it.read(array) > 0) String(array).trim() else ""
         }
-        return json.trim()
     }
 }

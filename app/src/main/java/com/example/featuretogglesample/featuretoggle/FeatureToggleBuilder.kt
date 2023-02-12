@@ -1,5 +1,7 @@
 package com.example.featuretogglesample.featuretoggle
 
+import kotlin.reflect.KClass
+
 interface FeatureToggleBuilder {
-    suspend fun <T> build(toggleClass: Class<T>): T
+    suspend fun <T : Any> build(toggleClass: KClass<T>): T
 }
