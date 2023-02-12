@@ -153,8 +153,8 @@ class JsonMerger @JvmOverloads constructor(
             when (arrayMergeMode) {
                 REPLACE_ARRAY -> override
                 MERGE_ARRAY -> base.apply {
-                    for (i in 0..override.length()) {
-                        put(override[i])
+                    repeat(override.length()) {
+                        put(override[it])
                     }
                 }
             }

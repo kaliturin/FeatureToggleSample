@@ -24,8 +24,8 @@ object FeatureToggleKoinModule {
 
         single<JsonObjectsProvider> {
             val assets = JsonObjectsProviderFromAssets(androidContext().assets)
-                .addJsonFile(JSON_DEF)
-                .addJsonFile(JSON_SPEC)
+                .addJsonFile(JSON_DEFAULTS)
+                .addJsonFile(JSON_SPECIFIC)
 
             val maps = JsonObjectsProviderFromMaps(get())
 
@@ -35,10 +35,10 @@ object FeatureToggleKoinModule {
         single<FeatureToggleBuilder> { FeatureToggleBuilderFromJson(get()) }
 
         single<FeatureToggleProvider<FeatureToggle>> {
-            FeatureToggleProviderImpl(FeatureToggle::class.java, get())
+            FeatureToggleProviderImpl(FeatureToggle::class, get())
         }
     }
 
-    private const val JSON_DEF = "featuresDefault.json"
-    private const val JSON_SPEC = "featuresSpecific.json"
+    private const val JSON_DEFAULTS = "featuresDefault.json"
+    private const val JSON_SPECIFIC = "featuresSpecific.json"
 }

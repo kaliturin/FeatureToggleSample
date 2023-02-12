@@ -11,6 +11,7 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
+import kotlin.reflect.KClass
 
 object JsonUtils {
 
@@ -20,6 +21,10 @@ object JsonUtils {
         .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true)
         .build()
         .registerKotlinModule()
+
+    fun <T : Any> fromJson(json: String?, clazz: KClass<T>): T? {
+        return fromJson(json, clazz.java)
+    }
 
     /**
      * Converts the passed json string to a object of the passed Class

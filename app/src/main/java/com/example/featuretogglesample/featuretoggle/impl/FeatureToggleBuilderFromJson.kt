@@ -8,27 +8,29 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import timber.log.Timber
+import kotlin.reflect.KClass
 
 class FeatureToggleBuilderFromJson(
     private val jsonObjectsProvider: JsonObjectsProvider
 ) : FeatureToggleBuilder {
 
-    override suspend fun <T> build(toggleClass: Class<T>): T {
+    override suspend fun <T : Any> build(toggleClass: KClass<T>): T {
         return withContext(Dispatchers.Default) {
-            val objects = jsonObjectsProvider.get()
-            // merge json objects into one
+            // merge json objects into the one
             val mergedObject = try {
                 JsonMerger(objectMergeMode = JsonMerger.ObjectMergeMode.MERGE_OBJECT)
-                    .merge(objects)
+                    .merge(jsonObjectsProvider.get())
             } catch (e: Exception) {
                 Timber.e(e)
                 JSONObject()
             }
-            // get the merged json content
-            val jsonString = mergedObject.toString()
-            // parse the json to feature toggle class
-            JsonUtils.fromJson(jsonString, toggleClass)
-                ?: toggleClass.newInstance()
+            // parse the merged object json to build the feature toggle class
+            val toggle = try {
+                JsonUtils.fromJson(mergedObject.toString(), toggleClass)
+            } catch (_: Exception) {
+                null
+            }
+            toggle ?: toggleClass.java.newInstance()
         }
     }
 }

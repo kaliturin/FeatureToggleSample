@@ -1,5 +1,7 @@
 package com.example.featuretogglesample.featuretoggle
 
+import kotlin.reflect.KClass
+
 interface FeatureToggleProvider<T> {
     /**
      * Returns the root of the feature toggle tree
@@ -14,5 +16,5 @@ interface FeatureToggleProvider<T> {
      * @throws SecurityException
      * @param sectionClass the class of a field of [FeatureToggle] class
      */
-    suspend fun <S> get(sectionClass: Class<S>): S
+    suspend fun <S : Any> get(sectionClass: KClass<S>): S
 }
