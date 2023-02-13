@@ -15,7 +15,7 @@ import kotlin.reflect.KClass
 
 object JsonUtils {
 
-    private val mapper: ObjectMapper = JsonMapper.builder()
+    val jsonObjectMapper: ObjectMapper = JsonMapper.builder()
         .configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true)
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
         .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true)
@@ -32,7 +32,7 @@ object JsonUtils {
     fun <T> fromJson(json: String?, clazz: Class<T>): T? {
         return if (!TextUtils.isEmpty(json)) {
             try {
-                mapper.readerFor(clazz).readValue(json)
+                jsonObjectMapper.readerFor(clazz).readValue(json)
             } catch (e: IOException) {
                 Timber.e(e)
                 throw RuntimeException(e)
