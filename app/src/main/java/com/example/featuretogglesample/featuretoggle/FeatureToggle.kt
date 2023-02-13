@@ -4,10 +4,11 @@ package com.example.featuretogglesample.featuretoggle
  * Every field of [FeatureToggle] class represents the application section.
  * Each section may content any number of fields of subsection types or boolean flags, strings and
  * numbers.
- * When you will add your own fields - make sure you init them with default value (else exception
- * may be thrown if some field won't be initialized by json parser).
+ * When you will add your own fields - make sure you init them with default value. Otherwise, an
+ * exception may be thrown if some field has not been initialized by the json parser.
  * Don't add the same section (field class) more than once, else it might not be extracted by
- * [FeatureToggleProvider].
+ * [FeatureToggleProvider] because it is looking for the first found instance of the section class
+ * in the [FeatureToggle] fields.
  * Data classes provide clone method facility for probable testing and logging needs.
  */
 data class FeatureToggle(

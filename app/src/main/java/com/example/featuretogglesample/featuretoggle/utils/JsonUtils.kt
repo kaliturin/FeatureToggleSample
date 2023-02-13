@@ -30,15 +30,14 @@ object JsonUtils {
      * Converts the passed json string to a object of the passed Class
      */
     fun <T> fromJson(json: String?, clazz: Class<T>): T? {
-        if (!TextUtils.isEmpty(json)) {
+        return if (!TextUtils.isEmpty(json)) {
             try {
-                return mapper.readerFor(clazz).readValue(json)
+                mapper.readerFor(clazz).readValue(json)
             } catch (e: IOException) {
                 Timber.e(e)
                 throw RuntimeException(e)
             }
-        }
-        return null
+        } else null
     }
 
     /**
