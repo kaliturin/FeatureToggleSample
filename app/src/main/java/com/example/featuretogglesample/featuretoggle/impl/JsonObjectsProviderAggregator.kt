@@ -4,6 +4,7 @@ import com.example.featuretogglesample.featuretoggle.JsonObjectsProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import timber.log.Timber
 
 /**
  * Aggregates [JSONObject] lists provided by the passed [JsonObjectsProvider] into common list
@@ -14,7 +15,13 @@ class JsonObjectsProviderAggregator(
     override suspend fun get(): List<JSONObject> {
         return withContext(Dispatchers.Default) {
             mutableListOf<JSONObject>().apply {
-                providers.forEach { addAll(it.get()) }
+                providers.forEach {
+                    try {
+                        addAll(it.get())
+                    } catch (e: Exception) {
+                        Timber.e(e)
+                    }
+                }
             }
         }
     }
