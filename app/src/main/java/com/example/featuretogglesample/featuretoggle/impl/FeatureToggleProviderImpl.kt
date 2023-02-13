@@ -2,6 +2,8 @@ package com.example.featuretogglesample.featuretoggle.impl
 
 import com.example.featuretogglesample.featuretoggle.FeatureToggleBuilder
 import com.example.featuretogglesample.featuretoggle.FeatureToggleProvider
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlin.reflect.KClass
 
 class FeatureToggleProviderImpl<T : Any>(
@@ -25,12 +27,14 @@ class FeatureToggleProviderImpl<T : Any>(
 
     @Suppress("UNCHECKED_CAST")
     override suspend fun <S : Any> get(sectionClass: KClass<S>): S {
-        val field = toggleClass.java.declaredFields
-            .find { it.type == sectionClass.java }
-            ?: throw IllegalArgumentException(
-                "${toggleClass.qualifiedName} doesn't have field instance of ${sectionClass.qualifiedName}"
-            )
-        field.isAccessible = true
-        return field[provide()] as S
+        return withContext(Dispatchers.Default) {
+            val field = toggleClass.java.declaredFields
+                .find { it.type == sectionClass.java }
+                ?: throw IllegalArgumentException(
+                    "${toggleClass.qualifiedName} doesn't have field instance of ${sectionClass.qualifiedName}"
+                )
+            field.isAccessible = true
+            field[provide()] as S
+        }
     }
 }

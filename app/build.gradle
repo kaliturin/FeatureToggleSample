@@ -61,4 +61,8 @@ dependencies {
 
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.13.4"
     implementation "io.insert-koin:koin-android:3.3.2"
+    implementation "com.squareup.okhttp3:okhttp:4.10.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-jackson:2.9.0"
 }
